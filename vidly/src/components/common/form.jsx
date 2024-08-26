@@ -14,6 +14,7 @@ class Form extends Component {
     validate = () => {
 
         const options = { abortEarly: false }
+        console.log(this.state.data, this.schema, options)
         const { error } = Joi.validate(this.state.data, this.schema, options)
 
         if (!error) return null
@@ -22,6 +23,8 @@ class Form extends Component {
         for (let item of error.details) {
             errors[item.path[0]] = item.message
         }
+
+        console.error(errors)
 
         return errors
 
@@ -41,6 +44,8 @@ class Form extends Component {
         // to disable post this form to the server*
 
         const errors = this.validate()
+        
+        console.log("Hello", errors)
         this.setState({ errors: errors || {} })
         if (errors) return
 
@@ -79,15 +84,16 @@ class Form extends Component {
         return (
 
             <button
-                disabled={this.validate()}
-                className="btn btn-primary">{label}</button>
+                // disabled={this.validate()}
+                type="submit"
+                className="btn btn-primary jjj">{label}</button>
         )
     }
 
     renderInput(name, label, type = "text") {
         const { data, errors } = this.state;
         return (
-            < Input
+            <Input
                 type={type}
                 name={name}
                 value={data[name]}
@@ -105,13 +111,14 @@ class Form extends Component {
     renderSelect(name, label, options) {
         const { data, errors } = this.state;
         // console.log(options)
+        console.log("hpp",data, name)
         return (
             <Select
                 name={name}
-                value={data[name]}
+                value={options.find(o => o.value == data[name])}
                 label={label}
                 options={options.map((v) => ({ value: v._id, label: v.name }))}
-                onChange={(v, actionMeta) => this.handleChange({ currentTarget: { name, value: v } })}
+                onChange={(v, actionMeta) => this.handleChange({ currentTarget: { name, value: v.value } })}
                 error={errors[name]}
             />
         );

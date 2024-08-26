@@ -17,6 +17,7 @@ class MovieForm extends Form {
 
     async componentDidMount() {
         const { data: genres } = await getGenres()
+        console.log(genres)
         this.setState({ genres })
     }
 
@@ -31,11 +32,17 @@ class MovieForm extends Form {
     }
 
     doSubmit = () => {
-        this.props.history.push('/movies')
-        const data = this.state.data
-        data._id = this.props.match.params.iiid
-        this.setState({ data })
-        saveMovie(data)
+        console.log("Hello 123",this.state.data)
+        fetch('http://localhost:3900/api/movies', {method:"POST",body: JSON.stringify(this.state.data)}).then(res => {
+
+            this.props.history.push('/movies')
+            const data = this.state.data
+            data._id = this.props.match.params.iiid
+            this.setState({ data })
+            
+            saveMovie(data)
+        })
+
 
     }
 

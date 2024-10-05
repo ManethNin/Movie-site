@@ -1,6 +1,0 @@
-{
-  "jwtPrivateKey": "unsecureKey",
-  "db": "mongodb+srv://kgmninduwara:maneth@cluster0.myaxkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  "port": "3900",
-  "requiresAuth": false
-}
